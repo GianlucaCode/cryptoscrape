@@ -25,4 +25,10 @@ class Thread(NamedLink):
         self.timestamp = timestamp
         self.replyCount = replyCount
         
+class SubReddit(NamedLink):
+    posts = set()
 
+    def __init__(self, url, name):
+        NamedLink.__init__(self, url, name)
+  
+        
