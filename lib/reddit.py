@@ -1,9 +1,5 @@
 import links
-import source.Source as Source
 import praw
-
-class Reddit(Source):
-    
 
 class SubReddit(links.NamedLink):
     posts = set()
