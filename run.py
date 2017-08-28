@@ -1,1 +1,4 @@
-from lib import constructors
+from lib import * 
+
+anInstance = reddit.Reddit()
+
