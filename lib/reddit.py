@@ -1,6 +1,8 @@
 import links
 import source
-import praw
+import json, requests, praw
+
+aReddit = praw.Reddit('crypto-scrape')
 
 INCLUDED_PATH_REDDIT = "../sources/reddit/include.txt"
 
