@@ -1,7 +1,8 @@
 class Source():
     included = set([])
     includePath = ""
-
+    mentions = dict()
+    
     def __init__(self, includePath, included=[]):
         self.included = set(included)
         self.includePath = includePath
