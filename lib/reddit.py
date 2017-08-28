@@ -1,6 +1,9 @@
 import links
 import source
 import json, requests, praw
+from shutil import copyfile
+
+copyfile("../praw.ini", "praw.ini")
 
 aReddit = praw.Reddit('crypto-scrape')
 
