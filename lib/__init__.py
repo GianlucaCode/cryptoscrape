@@ -1,1 +1,1 @@
-__all__ = [db, links, reddit, source]
+__all__ = ["db", "links", "reddit", "source"]
