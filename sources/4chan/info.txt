@@ -1,4 +1,0 @@
-include.txt is designed to hold specific boards crypto-scrape should parse through.
-
-Add a board by placing its name on a line in the file.
-By default (and as an example), only /biz/ is tracked.

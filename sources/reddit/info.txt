@@ -1,4 +1,0 @@
-include.txt is designed to hold specific subreddits crypto-scrape should parse through.
-
-Add a subreddit by placing its name on a line in the file.
-By default (and as an example), only /r/CryptoCurrency is tracked.
