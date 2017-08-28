@@ -4,13 +4,11 @@ from sqlite3 import Error
 def create_connection(db_path):
     try:
         connection = sqlite3.connect(db_path)
-        print("Connected to database with version "  + sqlite3.version)
-
+        return connection
     except Error as e:
         print(e)
-
-    finally:
-        connection.close()
+   
+    return None
 
 def execute_sql(connection, sql_file):
     try:
@@ -18,4 +16,9 @@ def execute_sql(connection, sql_file):
         c.execute(sql_file)
     except Error as e:
         print(e)
+
+def setup():
+    database = "cryptos.db"
+
+    connection = create_connection(database)
 
