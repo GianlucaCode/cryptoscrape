@@ -1,6 +1,7 @@
 import links
 import source
 import json, requests, praw
+import re
 
 INCLUDED_PATH_REDDIT = "sources/reddit/include.txt"
 
