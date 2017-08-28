@@ -1,10 +1,14 @@
 class Source():
     included = set([])
+    includePath = ""
 
-    def __init__(self, included=[]):
+    def __init__(self, includePath, included=[]):
         self.included = set(included)
+        self.includePath = includePath
+        self.updateIncluded(self.includePath)
 
-    def updateIncluded(path):
+    def updateIncluded(self, path):
         with open(path) as f:
             for line in f:
-                included.append(line.split("\n")[0])
+                self.included.add(line.split("\n")[0])
+
