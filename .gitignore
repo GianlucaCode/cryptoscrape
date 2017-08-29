@@ -1,4 +1,4 @@
 *.pyc
 .DS_Store
 praw.ini
-lastrun.txt
+.lastrun
