@@ -1,10 +1,11 @@
 import os
 
 class Source():
-    included = set([])
+    included = set()
     includePath = ""
     lastRunPath = ""
     lastRun = 0
+    cryptos = set()
 
     def __init__(self, includePath, lastRunPath, included=[]):
         self.included = set(included)
