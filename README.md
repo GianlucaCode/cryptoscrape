@@ -7,12 +7,12 @@ crypto-scrape is designed as a tool to be used in conjunction with other project
 These comparsions can then be used to judge the realibilty of crypto-scrape's metrics in predicting changes in crypto-currency value, or to make selling and purchasing decisions. crypto-scrape is simply a way to get that data.
 
 ## Configuration
-Each source has its own folder within the sources directory. Inside each source's folder are two text files: ```info.txt``` and ```included.txt ```, with ```info.txt ``` holding information on setting up that particular source.
+Each source has its own folder within the sources directory. Inside each source's folder are three text files: ```info.txt```, ```included.txt ```, and ```cryptos.txt``` with ```info.txt ``` holding information on setting up that particular source.
 
 ## Roadmap
-1. Implement subreddit scraping for included subreddits
-2. Implement mention tracking on top of scraping
-3. Collect and write data in an easily accessible and usable SQLite3 database
+1. Write data from mention-scraping from reddit into a SQLite3 table
+2. Further testing on reddit scraping from different sources and of different currencies
+3. Move on to other websites...
 
 ## Applications
 Applications of crypto-scrape will be linked here.
