@@ -12,6 +12,9 @@ These metrics are written to a SQLite database (```cryptos.db```) for easy acces
 
 Future: sentiment analysis on post and comment text...
 
+## Features
+As of right now, crypto-scrape only works with reddit. Read below to see how to configure reddit scraping.
+
 ## Configuration
 Each source has its own folder within the sources directory. Inside each source's folder are three text files: ```info.txt```, ```included.txt ```, and ```cryptos.txt``` with ```info.txt ``` holding information on setting up that particular source.
 
