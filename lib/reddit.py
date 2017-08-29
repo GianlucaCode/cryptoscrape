@@ -5,7 +5,7 @@ import re
 import datetime
 
 INCLUDED_PATH_REDDIT = "sources/reddit/include.txt"
-LAST_RUN_PATH_REDDIT = "sources/reddit/lastrun.txt"
+LAST_RUN_PATH_REDDIT = "sources/reddit/.lastrun"
 
 class Reddit(source.Source):
     subreddits = set()
@@ -18,8 +18,8 @@ class Reddit(source.Source):
 
 
     def collectMentions(self):
-        self.updateRun()
         for sub in self.subreddits:
             for post in sub.new(limit=5):
-                time = post.created
-                print(time)
+                time = int(post.created)
+                if (time > self.lastRun):
+                    print("This post is new since last run.")
