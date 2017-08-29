@@ -4,15 +4,17 @@ class Source():
     included = set()
     includePath = ""
     lastRunPath = ""
+    cryptoPath = ""
     lastRun = 0
     cryptos = set(["bitcoin"])
 
-    def __init__(self, includePath, lastRunPath, included=[]):
+    def __init__(self, includePath, lastRunPath, cryptoPath):
         self.included = set(included)
         self.includePath = includePath
         self.lastRunPath = lastRunPath
         self.updateIncluded()
         self.updateRun()
+        self.updateCryptos()
 
     def updateIncluded(self):
         with open(self.includePath) as f:
@@ -30,3 +32,8 @@ class Source():
                 f.write("0")
                 self.lastRun = 0
                 f.close()
+
+    def updateCryptos(self):
+        with open(self.cryptoPath) as f:
+            for line in f:
+                self.cryptos.add(line.split("\n")[0])
