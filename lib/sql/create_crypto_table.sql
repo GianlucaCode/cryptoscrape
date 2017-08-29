@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS cryptos(
-	id integer PRIMARY KEY,
-	name text NOT NULL,
-	total_mentions integer
+	source text NOT NULL,
+    sub text NOT NULL,
+	currency text NOT NULL,
+	total_mentions integer,
+    date_added timestamp
 );
-

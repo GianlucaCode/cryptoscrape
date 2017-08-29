@@ -1,4 +1,10 @@
 from lib import *
 
+db.setup()
+
 anInstance = reddit.Reddit()
-anInstance.collectMentions(1)
+
+postLimit = 5
+
+anInstance.collectMentions(postLimit)
+anInstance.writeMentions()
