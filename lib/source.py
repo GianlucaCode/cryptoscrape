@@ -5,7 +5,7 @@ class Source():
     includePath = ""
     lastRunPath = ""
     lastRun = 0
-    cryptos = set()
+    cryptos = set(["bitcoin"])
 
     def __init__(self, includePath, lastRunPath, included=[]):
         self.included = set(included)
