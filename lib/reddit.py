@@ -5,6 +5,7 @@ import datetime
 
 INCLUDED_PATH_REDDIT = "sources/reddit/include.txt"
 LAST_RUN_PATH_REDDIT = "sources/reddit/.lastrun"
+CRYPTOS_PATH_REDDIT = "sources/reddit/cryptos.txt"
 
 class Reddit(source.Source):
     subreddits = set()
@@ -12,14 +13,14 @@ class Reddit(source.Source):
     srMentions = dict()
 
     def __init__(self):
-        source.Source.__init__(self, INCLUDED_PATH_REDDIT, LAST_RUN_PATH_REDDIT)
+        source.Source.__init__(self, INCLUDED_PATH_REDDIT, LAST_RUN_PATH_REDDIT, CRYPTOS_PATH_REDDIT)
         for sr in self.included:
             self.subreddits.add(self.instance.subreddit(sr))
             self.srMentions[sr] = 0
 
     def collectMentions(self):
         for sub in self.subreddits:
-            for post in sub.new(limit=100):
+            for post in sub.new(limit=25):
                 time = int(post.created)
 
                 if (time > self.lastRun):
