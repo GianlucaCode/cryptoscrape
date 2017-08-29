@@ -12,7 +12,7 @@ Each source has its own folder within the sources directory. Inside each source'
 ## Roadmap
 1. Implement subreddit scraping for included subreddits
 2. Implement mention tracking on top of scraping
-3. Collect and write data in an easily used file or database (solution currently undetermined)
+3. Collect and write data in an easily accessible and usable SQLite3 database
 
 ## Applications
 Applications of crypto-scrape will be linked here.
