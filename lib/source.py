@@ -1,4 +1,5 @@
 import os
+import db
 
 class Source():
     included = set()
@@ -21,6 +22,7 @@ class Source():
         with open(self.includePath) as f:
             for line in f:
                 self.included.add(line.split("\n")[0])
+            f.close()
 
     def updateRun(self, ts=0):
         with open(self.lastRunPath,"w+") as f:
@@ -32,3 +34,7 @@ class Source():
         with open(self.cryptoPath) as f:
             for line in f:
                 self.cryptos.add(line.split("\n")[0])
+            f.close()
+
+    def writeMentions(self):
+        db.setup()
