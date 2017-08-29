@@ -1,4 +1,4 @@
 INSERT INTO cryptos
-(source, name, total_mentions, date_added)
+(source, sub, currency, total_mentions, date_added)
 VALUES
-(%s, %s, %i, %s);
+('%s', '%s', '%s', %i, CURRENT_TIMESTAMP);
