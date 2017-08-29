@@ -9,9 +9,10 @@ class Source():
     cryptos = set(["bitcoin"])
 
     def __init__(self, includePath, lastRunPath, cryptoPath):
-        self.included = set(included)
+        self.included = set()
         self.includePath = includePath
         self.lastRunPath = lastRunPath
+        self.cryptoPath = cryptoPath
         self.updateIncluded()
         self.updateRun()
         self.updateCryptos()
