@@ -1,4 +1,4 @@
 from lib import *
 
 anInstance = reddit.Reddit()
-anInstance.collectMentions()
+anInstance.collectMentions(3)
