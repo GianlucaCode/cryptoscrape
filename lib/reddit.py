@@ -1,7 +1,7 @@
 import links
 import source
 import json, requests, praw
-import datetime
+import time
 
 INCLUDED_PATH_REDDIT = "sources/reddit/include.txt"
 LAST_RUN_PATH_REDDIT = "sources/reddit/.lastrun"
@@ -18,19 +18,17 @@ class Reddit(source.Source):
             self.subreddits.add(self.instance.subreddit(sr))
             self.srMentions[sr] = 0
 
-    def collectMentions(self):
+    def collectMentions(self, lim=0):
         for sub in self.subreddits:
-            for post in sub.new(limit=25):
-                time = int(post.created)
+            for post in sub.new():
+                postTime = int(post.created)
 
-                if (time > self.lastRun):
-                    post.comments.replace_more(limit=0)
+                if (postTime > self.lastRun):
+                    post.comments.replace_more(limit = lim)
                     for crypto in self.cryptos:
                         self.srMentions[sub.display_name] += post.selftext.lower().count(crypto)
                         self.srMentions[sub.display_name] += post.url.lower().count(crypto)
                         for comment in post.comments.list():
                             self.srMentions[sub.display_name] += comment.body.lower().count(crypto)
 
-        # for key, value in self.srMentions.items():
-        #     print(key)
-        #     print(value)
+        self.updateRun(time.time())
