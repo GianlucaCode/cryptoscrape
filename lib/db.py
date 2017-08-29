@@ -29,8 +29,5 @@ def execute_sql(database, sql_filepath, params=[]):
         print(e)
 
 def setup():
-    database = "cryptos.db"
-
-    execute_sql(database, "lib/sql/create_crypto_table.sql")
-
-    print("Everything set up")
+    DATABASE_NAME = "cryptos.db"
+    execute_sql(DATABASE_NAME, "lib/sql/create_crypto_table.sql")
