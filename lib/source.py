@@ -6,7 +6,7 @@ class Source():
     lastRunPath = ""
     cryptoPath = ""
     lastRun = 0
-    cryptos = set(["bitcoin"])
+    cryptos = set()
 
     def __init__(self, includePath, lastRunPath, cryptoPath):
         self.included = set()
@@ -22,17 +22,11 @@ class Source():
             for line in f:
                 self.included.add(line.split("\n")[0])
 
-    def updateRun(self):
-        if os.path.isfile(self.lastRunPath):
-            with open(self.lastRunPath) as f:
-                for line in f:
-                    self.lastRun = int(line.split("\n")[0])
-        # if file does not exist, it is created with a timestamp of 0
-        else:
-            with open(self.lastRunPath,"w+") as f:
-                f.write("0")
-                self.lastRun = 0
-                f.close()
+    def updateRun(self, ts=0):
+        with open(self.lastRunPath,"w+") as f:
+            f.write(str(ts))
+            self.lastRun = int(ts)
+            f.close()
 
     def updateCryptos(self):
         with open(self.cryptoPath) as f:
