@@ -7,7 +7,7 @@ crypto-scrape is designed as a tool to be used in conjunction with other project
 These metrics are written to a SQLite database (```cryptos.db```) for easy accessibility and manipulation.
 
 ## Roadmap
-1. Sentiment analysis using TextBlob 
+1. Sentiment analysis using TextBlob (this will require new table structuring)
 2. More rigorous testing of reddit sourcing
 3. Move on to source from other websites.
 
