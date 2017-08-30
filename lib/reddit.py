@@ -48,5 +48,5 @@ class Reddit(source.Source):
         for source, mentions in self.srMentions.iteritems():
             if isinstance(mentions, dict):
                 for currency, number in mentions.iteritems():
-                    db.execute_sql("cryptos.db", "lib/sql/insert_mentions.sql",
+                    db.execute_sql("cryptos.db", "lib/sql/insert_all_mentions.sql",
                     ["reddit", source, currency, number])
