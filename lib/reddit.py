@@ -35,7 +35,7 @@ class Reddit(source.Source):
         self.updateRun(time.time())
 
     def writeMentions(self):
-        for source, mentions in stuff.iteritems():
+        for source, mentions in self.srMentions.iteritems():
             if isinstance(mentions, dict):
                 for currency, number in mentions.iteritems():
                     db.execute_sql("cryptos.db", "lib/sql/insert_mentions.sql",
