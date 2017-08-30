@@ -22,16 +22,25 @@ class Reddit(source.Source):
 
     def collectMentions(self, lim=0):
         for sub in self.subreddits:
-            for post in sub.new():
+            for post in sub.new(lim):
                 postTime = int(post.created)
 
                 if (postTime > self.lastRun):
+                    # include all comments
                     post.comments.replace_more(limit = lim)
+
                     for crypto in self.cryptos:
-                        self.srMentions[sub.display_name][crypto] += post.selftext.lower().count(crypto)
                         self.srMentions[sub.display_name][crypto] += post.url.lower().count(crypto)
+
+                        if (post.selftext.lower().count(crypto) > 0):
+                            self.srMentions[sub.display_name][crypto] += post.selftext.lower().count(crypto)
+                            selfTextBlob = TextBlob(post.selftext.lower())
+
                         for comment in post.comments.list():
-                            self.srMentions[sub.display_name][crypto] += comment.body.lower().count(crypto)
+
+                            if (comment.body.lower().count(crypto) > 0):
+                                self.srMentions[sub.display_name][crypto] += comment.body.lower().count(crypto)
+                                commentBlob = TextBlob(comment.body.lower())
 
         self.updateRun(time.time())
 
