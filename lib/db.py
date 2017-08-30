@@ -31,3 +31,5 @@ def execute_sql(database, sql_filepath, params=[]):
 def setup():
     DATABASE_NAME = "cryptos.db"
     execute_sql(DATABASE_NAME, "lib/sql/create_all_mentions_table.sql")
+    execute_sql(DATABASE_NAME, "lib/sql/create_reddit_posts_table.sql")
+    execute_sql(DATABASE_NAME, "lib/sql/create_reddit_comments_table.sql")
