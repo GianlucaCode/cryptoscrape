@@ -1,6 +1,7 @@
 import links, source, db
 import praw
 import time
+from textblob import TextBlob
 
 INCLUDED_PATH_REDDIT = "sources/reddit/include.txt"
 LAST_RUN_PATH_REDDIT = "sources/reddit/.lastrun"
