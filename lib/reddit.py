@@ -22,12 +22,12 @@ class Reddit(source.Source):
 
     def collectMentions(self, lim=0):
         for sub in self.subreddits:
-            for post in sub.new(lim):
+            for post in sub.hot(limit = lim):
                 postTime = int(post.created)
 
                 if (postTime > self.lastRun):
                     # include all comments
-                    post.comments.replace_more(limit = lim)
+                    post.comments.replace_more(limit = None)
 
                     for crypto in self.cryptos:
                         self.srMentions[sub.display_name][crypto] += post.url.lower().count(crypto)
