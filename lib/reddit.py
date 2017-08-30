@@ -22,7 +22,7 @@ class Reddit(source.Source):
 
     def collectMentions(self, lim=0):
         for sub in self.subreddits:
-            for post in sub.hot(limit = lim):
+            for post in sub.new(limit = lim):
                 postTime = int(post.created)
 
                 if (postTime > self.lastRun):
