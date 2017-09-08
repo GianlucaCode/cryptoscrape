@@ -35,17 +35,20 @@ class Reddit(source.Source):
                         if (post.selftext.lower().count(crypto) > 0):
                             self.srMentions[sub.display_name][crypto] += post.selftext.lower().count(crypto)
                             selfTextBlob = TextBlob(post.selftext.lower())
-
+                            sentimentScore = selfTextBlob.sentiment.polarity
+                            print(sentimentScore)
+                            
                         for comment in post.comments.list():
 
                             if (comment.body.lower().count(crypto) > 0):
                                 self.srMentions[sub.display_name][crypto] += comment.body.lower().count(crypto)
                                 commentBlob = TextBlob(comment.body.lower())
-
+                                commentScore = commentBlob.sentiment.polarity
+                                print(commentScore)
         self.updateRun(time.time())
 
     def writeMentions(self):
-        for source, mentions in self.srMentions.iteritems():
+	 for source, mentions in self.srMentions.iteritems():
             if isinstance(mentions, dict):
                 for currency, number in mentions.iteritems():
                     db.execute_sql("cryptos.db", "lib/sql/insert_all_mentions.sql",
