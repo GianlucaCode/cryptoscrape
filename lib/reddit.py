@@ -36,7 +36,7 @@ class Reddit(source.Source):
                             self.srMentions[sub.display_name][crypto] += post.selftext.lower().count(crypto)
                             selfTextBlob = TextBlob(post.selftext.lower())
                             sentimentScore = selfTextBlob.sentiment.polarity
-                            print(sentimentScore)
+                            print("selftext score: " + str(sentimentScore))
                             
                         for comment in post.comments.list():
 
@@ -44,7 +44,7 @@ class Reddit(source.Source):
                                 self.srMentions[sub.display_name][crypto] += comment.body.lower().count(crypto)
                                 commentBlob = TextBlob(comment.body.lower())
                                 commentScore = commentBlob.sentiment.polarity
-                                print(commentScore)
+                                print("comment score: " + str(commentScore))
         self.updateRun(time.time())
 
     def writeMentions(self):
