@@ -36,5 +36,3 @@ class Source():
                 self.cryptos.add(line.split("\n")[0])
             f.close()
 
-    def writeMentions(self):
-        db.setup()

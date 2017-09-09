@@ -1,6 +1,7 @@
 import links, source, db
 import praw
 import time
+from textblob import TextBlob
 
 INCLUDED_PATH_REDDIT = "sources/reddit/include.txt"
 LAST_RUN_PATH_REDDIT = "sources/reddit/.lastrun"
@@ -21,22 +22,41 @@ class Reddit(source.Source):
 
     def collectMentions(self, lim=0):
         for sub in self.subreddits:
-            for post in sub.new():
+            for post in sub.new(limit = lim):
                 postTime = int(post.created)
 
                 if (postTime > self.lastRun):
-                    post.comments.replace_more(limit = lim)
-                    for crypto in self.cryptos:
-                        self.srMentions[sub.display_name][crypto] += post.selftext.lower().count(crypto)
-                        self.srMentions[sub.display_name][crypto] += post.url.lower().count(crypto)
-                        for comment in post.comments.list():
-                            self.srMentions[sub.display_name][crypto] += comment.body.lower().count(crypto)
+                    # include all comments
+                    post.comments.replace_more(limit = None)
 
+                    for crypto in self.cryptos:
+                        self.srMentions[sub.display_name][crypto] += post.url.lower().count(crypto)
+
+                        if (post.selftext.lower().count(crypto) > 0):
+                            self.srMentions[sub.display_name][crypto] += post.selftext.lower().count(crypto)
+                            selfTextBlob = TextBlob(post.selftext)
+                            sentimentScore = selfTextBlob.sentiment.polarity
+                            subjectivityScore = selfTextBlob.sentiment.subjectivity
+                            db.execute_sql("cryptos.db", "lib/sql/insert_reddit_post.sql", [str(sub), crypto, stripChars(post.selftext), sentimentScore, subjectivityScore])                              
+                        for comment in post.comments.list():
+
+                            if (comment.body.lower().count(crypto) > 0):
+                                self.srMentions[sub.display_name][crypto] += comment.body.lower().count(crypto)
+                                commentBlob = TextBlob(comment.body)
+                                commentSentiment = commentBlob.sentiment.polarity
+                              	commentSubjectivity = commentBlob.sentiment.subjectivity 
+				db.execute_sql("cryptos.db", "lib/sql/insert_reddit_comment.sql", [str(sub), crypto, str(comment), stripChars(comment.body), commentSentiment, commentSubjectivity])
+
+        
         self.updateRun(time.time())
 
     def writeMentions(self):
-        for source, mentions in self.srMentions.iteritems():
+	 for source, mentions in self.srMentions.iteritems():
             if isinstance(mentions, dict):
                 for currency, number in mentions.iteritems():
-                    db.execute_sql("cryptos.db", "lib/sql/insert_mentions.sql",
+                    db.execute_sql("cryptos.db", "lib/sql/insert_all_mentions.sql",
                     ["reddit", source, currency, number])
+
+
+def stripChars(text):
+	return text.replace("\"", "").replace("'", "")

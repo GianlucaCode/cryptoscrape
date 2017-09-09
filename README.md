@@ -7,10 +7,9 @@ crypto-scrape is designed as a tool to be used in conjunction with other project
 These metrics are written to a SQLite database (```cryptos.db```) for easy accessibility and manipulation.
 
 ## Roadmap
-1. More rigorous testing of reddit sourcing 
-2. Move on to source from other websites.
-
-Future: sentiment analysis on post and comment text...
+1. Sentiment analysis using TextBlob (this will require new table structuring)
+2. More rigorous testing of reddit sourcing
+3. Move on to source from other websites.
 
 ## Features
 As of right now, crypto-scrape only works with reddit. Read below to see how to configure reddit scraping.
@@ -21,7 +20,7 @@ Each source has its own folder within the sources directory. Inside each source'
 Additionally, you must set up an app [here](https://www.reddit.com/prefs/apps/) and enter all relevant information into the ```praw.ini``` file before scraping.
 
 ## Usage
-As of right now, this project is not incredibly user-friendly. **You must be running Python > v2.5 and have [PRAW](http://praw.readthedocs.io/en/latest/getting_started/installation.html) installed in order for this to run properly.** Note that you may want to change the ```postLimit``` variable within ```run.py``` before use.
+As of right now, this project is not incredibly user-friendly. **You must be running Python > v2.5 and have [PRAW](http://praw.readthedocs.io/en/latest/getting_started/installation.html)  and [TextBlob](https://textblob.readthedocs.io/en/dev/index.html#get-it-now) installed in order for this to run properly.** Note that you may want to change the ```postLimit``` variable within ```run.py``` before use.
 
 To run:
 
