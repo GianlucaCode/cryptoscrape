@@ -4,7 +4,7 @@ db.setup()
 
 anInstance = reddit.Reddit()
 
-postLimit = 5
+postLimit = 20 
 
 anInstance.collectMentions(postLimit)
 anInstance.writeMentions()
