@@ -34,17 +34,20 @@ class Reddit(source.Source):
 
                         if (post.selftext.lower().count(crypto) > 0):
                             self.srMentions[sub.display_name][crypto] += post.selftext.lower().count(crypto)
-                            selfTextBlob = TextBlob(post.selftext.lower())
+                            selfTextBlob = TextBlob(post.selftext)
                             sentimentScore = selfTextBlob.sentiment.polarity
-                            print("selftext score: " + str(sentimentScore))
-                            
+                            subjectivityScore = selfTextBlob.sentiment.subjectivity
+                            db.execute_sql("cryptos.db", "lib/sql/insert_reddit_post.sql", [str(sub), crypto, stripChars(post.selftext), sentimentScore, subjectivityScore])                              
                         for comment in post.comments.list():
 
                             if (comment.body.lower().count(crypto) > 0):
                                 self.srMentions[sub.display_name][crypto] += comment.body.lower().count(crypto)
-                                commentBlob = TextBlob(comment.body.lower())
-                                commentScore = commentBlob.sentiment.polarity
-                                print("comment score: " + str(commentScore))
+                                commentBlob = TextBlob(comment.body)
+                                commentSentiment = commentBlob.sentiment.polarity
+                              	commentSubjectivity = commentBlob.sentiment.subjectivity 
+				db.execute_sql("cryptos.db", "lib/sql/insert_reddit_comment.sql", [str(sub), crypto, str(comment), stripChars(comment.body), commentSentiment, commentSubjectivity])
+
+        
         self.updateRun(time.time())
 
     def writeMentions(self):
@@ -53,3 +56,7 @@ class Reddit(source.Source):
                 for currency, number in mentions.iteritems():
                     db.execute_sql("cryptos.db", "lib/sql/insert_all_mentions.sql",
                     ["reddit", source, currency, number])
+
+
+def stripChars(text):
+	return text.replace("\"", "").replace("'", "")
