@@ -7,9 +7,8 @@ crypto-scrape is designed as a tool to be used in conjunction with other project
 These metrics are written to a SQLite database (```cryptos.db```) for easy accessibility and manipulation.
 
 ## Roadmap
-1. Sentiment analysis using TextBlob (this will require new table structuring)
-2. More rigorous testing of reddit sourcing
-3. Move on to source from other websites.
+1. More rigorous testing of Reddit sourcing
+2. Move on to source from other websites.
 
 ## Features
 As of right now, crypto-scrape only works with reddit. Read below to see how to configure reddit scraping.
