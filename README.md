@@ -19,7 +19,7 @@ Each source has its own folder within the sources directory. Inside each source'
 Additionally, you must set up an app [here](https://www.reddit.com/prefs/apps/) and enter all relevant information into the ```praw.ini``` file before scraping.
 
 ## Usage
-As of right now, this project is not incredibly user-friendly. **You must be running Python > v2.5 and have [PRAW](http://praw.readthedocs.io/en/latest/getting_started/installation.html)  and [TextBlob](https://textblob.readthedocs.io/en/dev/index.html#get-it-now) installed in order for this to run properly.** Note that you may want to change the ```postLimit``` variable within ```run.py``` before use.
+As of right now, this project is not incredibly user-friendly. **You must be running Python > v2.5 and have [PRAW](http://praw.readthedocs.io/en/latest/getting_started/installation.html)  and [TextBlob](https://textblob.readthedocs.io/en/dev/index.html#get-it-now) installed in order for this to run properly.** This now uses command-line arguments to handle the post limit. See usage below.
 
 To run:
 
@@ -28,7 +28,7 @@ git clone https://github.com/bdscharf/crypto-scrape.git
 
 cd crypto-scrape
 
-python run.py
+python run.py [post-limit]
 ```
 
 ## Applications
