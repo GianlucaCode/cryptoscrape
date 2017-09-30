@@ -37,7 +37,8 @@ class Reddit(source.Source):
                             selfTextBlob = TextBlob(post.selftext)
                             sentimentScore = selfTextBlob.sentiment.polarity
                             subjectivityScore = selfTextBlob.sentiment.subjectivity
-                            db.execute_sql("cryptos.db", "lib/sql/insert_reddit_post.sql", [str(sub), crypto, stripChars(post.selftext), sentimentScore, subjectivityScore])                              
+                            db.execute_sql("cryptos.db", "lib/sql/insert_reddit_post.sql", [str(sub), crypto, stripChars(post.selftext), sentimentScore, subjectivityScore])
+                                                          
                         for comment in post.comments.list():
 
                             if (comment.body.lower().count(crypto) > 0):
@@ -45,6 +46,7 @@ class Reddit(source.Source):
                                 commentBlob = TextBlob(comment.body)
                                 commentSentiment = commentBlob.sentiment.polarity
                               	commentSubjectivity = commentBlob.sentiment.subjectivity 
+
 				db.execute_sql("cryptos.db", "lib/sql/insert_reddit_comment.sql", [str(sub), crypto, str(comment), stripChars(comment.body), commentSentiment, commentSubjectivity])
 
         
