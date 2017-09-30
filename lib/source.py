@@ -22,6 +22,10 @@ class Source():
         with open(self.includePath) as f:
             for line in f:
                 self.included.add(line.split("\n")[0])
+
+            if (len(self.included) == 0):
+                print("\nWARNING: No sources included.\n")
+
             f.close()
 
     def updateRun(self, ts=0):
@@ -34,5 +38,9 @@ class Source():
         with open(self.cryptoPath) as f:
             for line in f:
                 self.cryptos.add(line.split("\n")[0])
+
+            if (len(self.cryptos) == 0): 
+                print("\nWARNING: No crypto-currencies included.\n")
+
             f.close()
 
