@@ -1,0 +1,3 @@
+[submodule "lib/simple-sql"]
+	path = lib/simple-sql
+	url = https://github.com/bdscharf/simple-sql
