@@ -12,8 +12,6 @@ if (len(args.integer) > 0):
 
 print("Searching %i posts..." % (postLimit))
 
-db.setup()
-
 anInstance = reddit.Reddit()
 
 anInstance.collectMentions(postLimit)
