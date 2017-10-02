@@ -1,5 +1,5 @@
 import links, source
-from simple_sql import db
+from simplesql import db
 import praw
 import time
 from textblob import TextBlob
