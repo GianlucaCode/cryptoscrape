@@ -1,5 +1,4 @@
 import os
-import db
 
 class Source():
     included = set()

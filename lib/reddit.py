@@ -1,4 +1,5 @@
-import links, source, db
+import links, source
+from simple_sql import db
 import praw
 import time
 from textblob import TextBlob
@@ -11,9 +12,11 @@ class Reddit(source.Source):
     subreddits = set()
     instance = praw.Reddit("crypto-scrape")
     srMentions = dict()
+    data = db.Database("cryptos.db")
 
     def __init__(self):
         source.Source.__init__(self, INCLUDED_PATH_REDDIT, LAST_RUN_PATH_REDDIT, CRYPTOS_PATH_REDDIT)
+        self.setup()
         for sr in self.included:
             self.subreddits.add(self.instance.subreddit(sr))
             self.srMentions[sr] = {}
@@ -37,7 +40,7 @@ class Reddit(source.Source):
                             selfTextBlob = TextBlob(post.selftext)
                             sentimentScore = selfTextBlob.sentiment.polarity
                             subjectivityScore = selfTextBlob.sentiment.subjectivity
-                            db.execute_sql("cryptos.db", "lib/sql/insert_reddit_post.sql", [str(sub), crypto, stripChars(post.selftext), sentimentScore, subjectivityScore])
+                            self.data.executeSQLFile("lib/sql/insert_reddit_post.sql", [str(sub), crypto, stripChars(post.selftext), sentimentScore, subjectivityScore])
                                                           
                         for comment in post.comments.list():
 
@@ -47,7 +50,7 @@ class Reddit(source.Source):
                                 commentSentiment = commentBlob.sentiment.polarity
                               	commentSubjectivity = commentBlob.sentiment.subjectivity 
 
-				db.execute_sql("cryptos.db", "lib/sql/insert_reddit_comment.sql", [str(sub), crypto, str(comment), stripChars(comment.body), commentSentiment, commentSubjectivity])
+				self.data.executeSQLFile("lib/sql/insert_reddit_comment.sql", [str(sub), crypto, str(comment), stripChars(comment.body), commentSentiment, commentSubjectivity])
 
         
         self.updateRun(time.time())
@@ -56,9 +59,15 @@ class Reddit(source.Source):
 	 for source, mentions in self.srMentions.iteritems():
             if isinstance(mentions, dict):
                 for currency, number in mentions.iteritems():
-                    db.execute_sql("cryptos.db", "lib/sql/insert_all_mentions.sql",
+                    self.data.executeSQLFile("lib/sql/insert_all_mentions.sql",
                     ["reddit", source, currency, number])
+
+    def setup(self):
+        self.data.executeSQLFile("lib/sql/create_all_mentions_table.sql")
+        self.data.executeSQLFile("lib/sql/create_reddit_posts_table.sql")
+        self.data.executeSQLFile("lib/sql/create_reddit_comments_table.sql")
 
 
 def stripChars(text):
 	return text.replace("\"", "").replace("'", "")
+
