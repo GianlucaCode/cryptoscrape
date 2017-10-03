@@ -1,8 +1,8 @@
-# crypto-scrape
-This is crypto-scrape, a simple webscraper designed to get information on various crypto-currencies from popular online forums and imageboards.
+# cryptoscrape
+This is cryptoscrape, a simple webscraper designed to get information on various crypto-currencies from popular online forums and imageboards.
 
 ## Why?
-crypto-scrape is designed as a tool to be used in conjunction with other projects. By harnessing the power of crypto-scrape, one can easily compare mentions and other metrics of popularity between different crypto-currencies.
+cryptoscrape is designed as a tool to be used in conjunction with other projects. By harnessing the power of cryptoscrape, one can easily compare mentions and other metrics of popularity between different crypto-currencies.
 
 These metrics are written to a SQLite database (```cryptos.db```) for easy accessibility and manipulation.
 
@@ -11,7 +11,7 @@ These metrics are written to a SQLite database (```cryptos.db```) for easy acces
 2. Move on to source from other websites.
 
 ## Features
-As of right now, crypto-scrape only works with reddit. Read below to see how to configure reddit scraping.
+As of right now, cryptoscrape only works with reddit. Read below to see how to configure reddit scraping.
 
 ## Configuration
 Each source has its own folder within the sources directory. Inside each source's folder are three text files: ```info.txt```, ```included.txt ```, and ```cryptos.txt``` with ```info.txt ``` holding information on setting up that particular source.
@@ -24,9 +24,9 @@ As of right now, this project is not incredibly user-friendly. **You must be run
 To run:
 
 ```
-git clone https://github.com/bdscharf/crypto-scrape.git
+git clone https://github.com/bdscharf/cryptoscrape.git
 
-cd crypto-scrape
+cd cryptoscrape
 
 python run.py [post-limit]
 ```
