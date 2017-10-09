@@ -17,7 +17,7 @@ class Reddit(source.Source):
     def __init__(self):
         source.Source.__init__(self, INCLUDED_PATH_REDDIT, CRYPTOS_PATH_REDDIT)
         self.setup()
-	self.lastRun = 0
+    self.lastRun = 0
         for sr in self.included:
             self.subreddits.add(self.instance.subreddit(sr))
             self.srMentions[sr] = {}
@@ -49,15 +49,15 @@ class Reddit(source.Source):
                                 self.srMentions[sub.display_name][crypto] += comment.body.lower().count(crypto)
                                 commentBlob = TextBlob(comment.body)
                                 commentSentiment = commentBlob.sentiment.polarity
-                              	commentSubjectivity = commentBlob.sentiment.subjectivity 
+                                commentSubjectivity = commentBlob.sentiment.subjectivity 
 
-				self.data.executeSQLFile("lib/sql/insert_reddit_comment.sql", [str(sub), crypto, str(comment), stripChars(comment.body), commentSentiment, commentSubjectivity])
+                self.data.executeSQLFile("lib/sql/insert_reddit_comment.sql", [str(sub), crypto, str(comment), stripChars(comment.body), commentSentiment, commentSubjectivity])
 
         
         self.data.executeSQLFile("lib/sql/update_last_run.sql")
 
     def writeMentions(self):
-	 for source, mentions in self.srMentions.iteritems():
+     for source, mentions in self.srMentions.iteritems():
             if isinstance(mentions, dict):
                 for currency, number in mentions.iteritems():
                     self.data.executeSQLFile("lib/sql/insert_all_mentions.sql",
@@ -67,8 +67,8 @@ class Reddit(source.Source):
         self.data.executeSQLFile("lib/sql/create_all_mentions_table.sql")
         self.data.executeSQLFile("lib/sql/create_reddit_posts_table.sql")
         self.data.executeSQLFile("lib/sql/create_reddit_comments_table.sql")
-	self.data.executeSQLFile("lib/sql/create_last_run_table.sql")
+        self.data.executeSQLFile("lib/sql/create_last_run_table.sql")
 
 def stripChars(text):
-	return text.replace("\"", "").replace("'", "")
+    return text.replace("\"", "").replace("'", "")
 
