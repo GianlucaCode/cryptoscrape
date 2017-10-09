@@ -5,7 +5,6 @@ import time
 from textblob import TextBlob
 
 INCLUDED_PATH_REDDIT = "sources/reddit/include.txt"
-LAST_RUN_PATH_REDDIT = "sources/reddit/.lastrun"
 CRYPTOS_PATH_REDDIT = "sources/reddit/cryptos.txt"
 
 class Reddit(source.Source):
@@ -13,10 +12,12 @@ class Reddit(source.Source):
     instance = praw.Reddit("crypto-scrape")
     srMentions = dict()
     data = db.Database("cryptos.db")
+    self.lastRun = 0
 
     def __init__(self):
-        source.Source.__init__(self, INCLUDED_PATH_REDDIT, LAST_RUN_PATH_REDDIT, CRYPTOS_PATH_REDDIT)
+        source.Source.__init__(self, INCLUDED_PATH_REDDIT, CRYPTOS_PATH_REDDIT)
         self.setup()
+	self.lastRun = 0
         for sr in self.included:
             self.subreddits.add(self.instance.subreddit(sr))
             self.srMentions[sr] = {}
@@ -53,7 +54,7 @@ class Reddit(source.Source):
 				self.data.executeSQLFile("lib/sql/insert_reddit_comment.sql", [str(sub), crypto, str(comment), stripChars(comment.body), commentSentiment, commentSubjectivity])
 
         
-        self.updateRun(time.time())
+        self.data.executeSQLFile("lib/sql/update_last_run.sql")
 
     def writeMentions(self):
 	 for source, mentions in self.srMentions.iteritems():
@@ -66,7 +67,7 @@ class Reddit(source.Source):
         self.data.executeSQLFile("lib/sql/create_all_mentions_table.sql")
         self.data.executeSQLFile("lib/sql/create_reddit_posts_table.sql")
         self.data.executeSQLFile("lib/sql/create_reddit_comments_table.sql")
-
+	self.data.executeSQLFile("lib/sql/create_last_run_table.sql")
 
 def stripChars(text):
 	return text.replace("\"", "").replace("'", "")
