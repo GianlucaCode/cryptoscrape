@@ -1,2 +1,2 @@
-UPDATE last_run
-SET stamp = CURRENT_TIMESTAMP;
+INSERT INTO last_run(stamp)
+VALUES(CURRENT_TIMESTAMP);
