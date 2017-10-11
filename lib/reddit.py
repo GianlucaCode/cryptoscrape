@@ -9,7 +9,7 @@ CRYPTOS_PATH_REDDIT = "sources/reddit/cryptos.txt"
 
 class Reddit(source.Source):
     subreddits = set()
-    instance = praw.Reddit("crypto-scrape")
+    instance = praw.Reddit("cryptoscrape")
     srMentions = dict()
     data = db.Database("cryptos.db")
     lastRun = 0
