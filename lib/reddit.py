@@ -12,12 +12,12 @@ class Reddit(source.Source):
     instance = praw.Reddit("crypto-scrape")
     srMentions = dict()
     data = db.Database("cryptos.db")
-    self.lastRun = 0
+    lastRun = 0
 
     def __init__(self):
         source.Source.__init__(self, INCLUDED_PATH_REDDIT, CRYPTOS_PATH_REDDIT)
         self.setup()
-    self.lastRun = 0
+        self.lastRun = 0
         for sr in self.included:
             self.subreddits.add(self.instance.subreddit(sr))
             self.srMentions[sr] = {}

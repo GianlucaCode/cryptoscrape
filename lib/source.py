@@ -7,7 +7,7 @@ class Source():
     lastRun = 0
     cryptos = set()
 
-    def __init__(self, includePath, lastRunPath, cryptoPath):
+    def __init__(self, includePath, cryptoPath):
         self.included = set()
         self.includePath = includePath
         self.cryptoPath = cryptoPath
