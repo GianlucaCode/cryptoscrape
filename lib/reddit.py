@@ -25,8 +25,8 @@ class Reddit(source.Source):
                 self.srMentions[sr][crypto] = 0
 
     def collectMentions(self, lim=0):
-        for sub in self.subreddits:
-            for post in sub.new(limit = lim):
+        for sub in self.subreddits:  
+            for post in sub.new(limit=lim):
                 postTime = int(post.created)
 
                 if (postTime > self.lastRun):
@@ -51,7 +51,7 @@ class Reddit(source.Source):
                                 commentSentiment = commentBlob.sentiment.polarity
                                 commentSubjectivity = commentBlob.sentiment.subjectivity 
 
-                self.data.executeSQLFile("lib/sql/insert_reddit_comment.sql", [str(sub), crypto, str(comment), stripChars(comment.body), commentSentiment, commentSubjectivity])
+                                self.data.executeSQLFile("lib/sql/insert_reddit_comment.sql", [str(sub), crypto, str(comment), stripChars(comment.body), commentSentiment, commentSubjectivity])
 
         
         self.data.executeSQLFile("lib/sql/update_last_run.sql")
