@@ -8,7 +8,7 @@ args = parser.parse_args()
 postLimit = 0
 
 if (len(args.integer) > 0):
-	postLimit = args.integer[0]
+    postLimit = args.integer[0]
 
 print("Searching %i posts..." % (postLimit))
 
