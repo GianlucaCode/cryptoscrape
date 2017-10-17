@@ -16,7 +16,7 @@ As of right now, cryptoscrape only works with reddit. Read below to see how to c
 ## Configuration
 Each source has its own folder within the sources directory. Inside each source's folder are three text files: ```info.txt```, ```included.txt ```, and ```cryptos.txt``` with ```info.txt ``` holding information on setting up that particular source.
 
-Additionally, you must set up an app [here](https://www.reddit.com/prefs/apps/) and enter all relevant information into the ```praw.ini``` file before scraping.
+Additionally, you must set up an app [here](https://www.reddit.com/prefs/apps/) and enter all relevant information into the ```praw.ini``` file before scraping. A username and password are not required in the ```praw.ini``` and it is therefore **highly recommended** that you do not include those: this will reduce the likelihood this information is accidentally uploaded (see following note).
 
 Note: if you are pushing your own version of this project to a Git repository, please ensure that you are **not** pushing your ```praw.ini``` file, as it will contain *your* personal information. See [here](https://stackoverflow.com/questions/3319479/can-i-git-commit-a-file-and-ignore-its-content-changes) for information on ignoring changes to the file, so it will not be uploaded.
 
