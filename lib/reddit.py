@@ -27,12 +27,14 @@ class Reddit(source.Source):
 
     def collectMentions(self, lim=0):
         self.lastRun = str(self.data.retrieveData("last_run", "lib/sql/get_last_run.sql")[-1])[3:-3]
+        dtLastRun = datetime.strptime(self.lastRun, "%Y-%m-%d %H:%M:%S")
+
         for sub in self.subreddits:  
             for post in sub.new(limit=lim):
                 postTime = int(post.created)  # this is a unix timestamp
-                #print(datetime(postTime))
+                dtPostTime = datetime.fromtimestamp(postTime)
 
-                if (postTime > self.lastRun):
+                if (dtPostTime > dtLastRun):
                     # include all comments
                     post.comments.replace_more(limit = None)
 
