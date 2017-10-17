@@ -18,6 +18,8 @@ Each source has its own folder within the sources directory. Inside each source'
 
 Additionally, you must set up an app [here](https://www.reddit.com/prefs/apps/) and enter all relevant information into the ```praw.ini``` file before scraping.
 
+Note: if you are pushing your own version of this project to a Git repository, please ensure that you are **not** pushing your ```praw.ini``` file, as it will contain *your* personal information. See [here](https://stackoverflow.com/questions/3319479/can-i-git-commit-a-file-and-ignore-its-content-changes) for information on ignoring changes to the file, so it will not be uploaded.
+
 ## Usage
 As of right now, this project is not incredibly user-friendly. **You must be running Python > v2.5 and have [PRAW](http://praw.readthedocs.io/en/latest/getting_started/installation.html)  and [TextBlob](https://textblob.readthedocs.io/en/dev/index.html#get-it-now) installed in order for this to run properly.** This now uses command-line arguments to handle the post limit. See usage below.
 
