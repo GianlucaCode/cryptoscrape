@@ -1,4 +1,5 @@
 import os
+from simplesql import db
 
 class Source():
     included = set()
@@ -11,6 +12,7 @@ class Source():
         self.included = set()
         self.includePath = includePath
         self.cryptoPath = cryptoPath
+        self.lastRun = 0
         self.updateIncluded()
         self.updateCryptos()
 
