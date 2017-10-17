@@ -3,6 +3,7 @@ from simplesql import db
 import praw
 import time
 from textblob import TextBlob
+from datetime import datetime
 
 INCLUDED_PATH_REDDIT = "sources/reddit/include.txt"
 CRYPTOS_PATH_REDDIT = "sources/reddit/cryptos.txt"
@@ -25,9 +26,11 @@ class Reddit(source.Source):
                 self.srMentions[sr][crypto] = 0
 
     def collectMentions(self, lim=0):
+        self.lastRun = str(self.data.retrieveData("last_run", "lib/sql/get_last_run.sql")[-1])[3:-3]
         for sub in self.subreddits:  
             for post in sub.new(limit=lim):
-                postTime = int(post.created)
+                postTime = int(post.created)  # this is a unix timestamp
+                #print(datetime(postTime))
 
                 if (postTime > self.lastRun):
                     # include all comments
@@ -62,6 +65,7 @@ class Reddit(source.Source):
                 for currency, number in mentions.iteritems():
                     self.data.executeSQLFile("lib/sql/insert_all_mentions.sql",
                     ["reddit", source, currency, number])
+
 
     def setup(self):
         self.data.executeSQLFile("lib/sql/create_all_mentions_table.sql")
