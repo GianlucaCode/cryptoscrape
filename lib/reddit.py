@@ -18,7 +18,7 @@ class Reddit(source.Source):
     def __init__(self):
         source.Source.__init__(self, INCLUDED_PATH_REDDIT, CRYPTOS_PATH_REDDIT)
         self.setup()
-        self.lastRun = 0
+        self.lastRun = str(self.data.retrieveData("last_run", "lib/sql/get_last_run.sql")[-1])[3:-3]
         for sr in self.included:
             self.subreddits.add(self.instance.subreddit(sr))
             self.srMentions[sr] = {}
@@ -28,7 +28,7 @@ class Reddit(source.Source):
     def collectMentions(self, lim=0):
         self.lastRun = str(self.data.retrieveData("last_run", "lib/sql/get_last_run.sql")[-1])[3:-3]
         dtLastRun = datetime.strptime(self.lastRun, "%Y-%m-%d %H:%M:%S")
-
+	
         for sub in self.subreddits:  
             for post in sub.new(limit=lim):
                 postTime = int(post.created)  # this is a unix timestamp
@@ -74,6 +74,7 @@ class Reddit(source.Source):
         self.data.executeSQLFile("lib/sql/create_reddit_posts_table.sql")
         self.data.executeSQLFile("lib/sql/create_reddit_comments_table.sql")
         self.data.executeSQLFile("lib/sql/create_last_run_table.sql")
+	self.data.executeSQLFile("lib/sql/update_last_run.sql")
 
 def stripChars(text):
     return text.replace("\"", "").replace("'", "")
