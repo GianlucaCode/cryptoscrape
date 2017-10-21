@@ -1,5 +1,8 @@
 from lib import *
 import argparse
+import time
+
+startTime = time.time()
 
 parser = argparse.ArgumentParser(description="Select a post limit for reddit collection.")
 parser.add_argument('integer', metavar='limit', type=int, nargs='+',help='the post limit')
@@ -17,4 +20,4 @@ anInstance = reddit.Reddit()
 anInstance.collectMentions(postLimit)
 anInstance.writeMentions()
 
-print("Done.")
+print("Done, execution took %f seconds." % (time.time() - startTime))
