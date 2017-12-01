@@ -7,8 +7,8 @@ cryptoscrape is designed as a tool to be used in conjunction with other projects
 These metrics are written to a SQLite database (```cryptos.db```) for easy accessibility and manipulation.
 
 ## Roadmap
-1. More rigorous testing of Reddit sourcing
-2. Move on to source from other websites.
+1. Change way running is handled to require a parameter on the first run
+2. Allow users to run without a parameter, only fetching new posts and comments
 
 ## Features
 As of right now, cryptoscrape only works with reddit. Read below to see how to configure reddit scraping.
