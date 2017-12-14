@@ -1,17 +1,21 @@
 from lib import *
 import argparse
 import time
+import os.path
+
+# check if database has been created
+allowArgs = not os.path.isfile("cryptos.db") 
 
 startTime = time.time()
 
 parser = argparse.ArgumentParser(description="Select a post limit for reddit collection.")
-parser.add_argument('integer', metavar='limit', type=int, nargs='+',help='the post limit')
+parser.add_argument('--limit', metavar="[int]",  type=int,required=allowArgs,help='the post limit; must be supplied on first run: afterwards, default will be to collect all new material')
 args = parser.parse_args()
 
-postLimit = 0
+postLimit = args.limit
 
-if (len(args.integer) > 0):
-    postLimit = args.integer[0]
+if (not args.limit):
+   postLimit = 0 
 
 print("Searching %i posts..." % (postLimit))
 
