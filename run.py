@@ -15,9 +15,10 @@ args = parser.parse_args()
 postLimit = args.limit
 
 if (not args.limit):
-   postLimit = 0 
-
-print("Searching %i posts..." % (postLimit))
+   postLimit = 0
+   print("Getting newest posts...")
+else:  
+    print("Searching %i posts..." % (postLimit))
 
 anInstance = reddit.Reddit()
 
