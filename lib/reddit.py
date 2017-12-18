@@ -25,10 +25,19 @@ class Reddit(source.Source):
             for crypto in self.cryptos:
                 self.srMentions[sr][crypto] = 0
 
-    def collectMentions(self, lim=0):
+    def collectMentions(self, lim):
         self.lastRun = str(self.data.retrieveData("last_run", "lib/sql/get_last_run.sql")[-1])[3:-3]
-        dtLastRun = datetime.strptime(self.lastRun, "%Y-%m-%d %H:%M:%S")
-	
+        
+        if (lim == 0):
+            beginning = int(time.mktime(datetime.strptime(self.lastRun, "%Y-%m-%d %H:%M:%S").timetuple()))
+            for sub in self.subreddits:
+                for submission in self.instance.subreddit(str(sub)).submissions(None, beginning):
+                    # search through submissions here    
+            return
+        else:
+            self.data.executeSQLFile("lib/sql/update_last_run.sql")
+            return
+               
         for sub in self.subreddits:  
             for post in sub.new(limit=lim):
                 postTime = int(post.created)  # this is a unix timestamp
