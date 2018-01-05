@@ -34,38 +34,39 @@ class Reddit(source.Source):
                 for submission in self.instance.subreddit(str(sub)).submissions(None, beginning):
                     # search through submissions here    
             return
+        
         else:
             self.data.executeSQLFile("lib/sql/update_last_run.sql")
             return
                
-        for sub in self.subreddits:  
-            for post in sub.new(limit=lim):
-                postTime = int(post.created)  # this is a unix timestamp
-                dtPostTime = datetime.fromtimestamp(postTime)
+        # for sub in self.subreddits:  
+        #     for post in sub.new(limit=lim):
+        #         postTime = int(post.created)  # this is a unix timestamp
+        #         dtPostTime = datetime.fromtimestamp(postTime)
 
-                if (dtPostTime > dtLastRun):
-                    # include all comments
-                    post.comments.replace_more(limit = None)
+        #         if (dtPostTime > dtLastRun):
+        #             # include all comments
+        #             post.comments.replace_more(limit = None)
 
-                    for crypto in self.cryptos:
-                        self.srMentions[sub.display_name][crypto] += post.url.lower().count(crypto)
+        #             for crypto in self.cryptos:
+        #                 self.srMentions[sub.display_name][crypto] += post.url.lower().count(crypto)
 
-                        if (post.selftext.lower().count(crypto) > 0):
-                            self.srMentions[sub.display_name][crypto] += post.selftext.lower().count(crypto)
-                            selfTextBlob = TextBlob(post.selftext)
-                            sentimentScore = selfTextBlob.sentiment.polarity
-                            subjectivityScore = selfTextBlob.sentiment.subjectivity
-                            self.data.executeSQLFile("lib/sql/insert_reddit_post.sql", [str(sub), crypto, stripChars(post.selftext), sentimentScore, subjectivityScore])
+        #                 if (post.selftext.lower().count(crypto) > 0):
+        #                     self.srMentions[sub.display_name][crypto] += post.selftext.lower().count(crypto)
+        #                     selfTextBlob = TextBlob(post.selftext)
+        #                     sentimentScore = selfTextBlob.sentiment.polarity
+        #                     subjectivityScore = selfTextBlob.sentiment.subjectivity
+        #                     self.data.executeSQLFile("lib/sql/insert_reddit_post.sql", [str(sub), crypto, stripChars(post.selftext), sentimentScore, subjectivityScore])
                                                           
-                        for comment in post.comments.list():
+        #                 for comment in post.comments.list():
 
-                            if (comment.body.lower().count(crypto) > 0):
-                                self.srMentions[sub.display_name][crypto] += comment.body.lower().count(crypto)
-                                commentBlob = TextBlob(comment.body)
-                                commentSentiment = commentBlob.sentiment.polarity
-                                commentSubjectivity = commentBlob.sentiment.subjectivity 
+        #                     if (comment.body.lower().count(crypto) > 0):
+        #                         self.srMentions[sub.display_name][crypto] += comment.body.lower().count(crypto)
+        #                         commentBlob = TextBlob(comment.body)
+        #                         commentSentiment = commentBlob.sentiment.polarity
+        #                         commentSubjectivity = commentBlob.sentiment.subjectivity 
 
-                                self.data.executeSQLFile("lib/sql/insert_reddit_comment.sql", [str(sub), crypto, str(comment), stripChars(comment.body), commentSentiment, commentSubjectivity])
+        #                         self.data.executeSQLFile("lib/sql/insert_reddit_comment.sql", [str(sub), crypto, str(comment), stripChars(comment.body), commentSentiment, commentSubjectivity])
 
         
         self.data.executeSQLFile("lib/sql/update_last_run.sql")
