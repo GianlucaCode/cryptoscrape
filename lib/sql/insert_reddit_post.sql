@@ -1,4 +1,4 @@
 INSERT INTO reddit_posts
-(sub, currency, contents, sentiment, subjectivity)
+(title, sub, currency, contents, sentiment, subjectivity)
 VALUES
-('%s', '%s', '%s', %f, %f);
+('%s', '%s', '%s', '%s', %f, %f);
