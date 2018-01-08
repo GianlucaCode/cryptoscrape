@@ -32,43 +32,29 @@ class Reddit(source.Source):
             beginning = int(time.mktime(datetime.strptime(self.lastRun, "%Y-%m-%d %H:%M:%S").timetuple()))
             for sub in self.subreddits:
                 for submission in self.instance.subreddit(str(sub)).submissions(None, beginning):
-                    # search through submissions here    
-            return
-        
+                    # now search for cryptos
+                    for crypto in self.cryptos:
+                        if ((post.selftext + post.title).lower().count(crypto) > 0):
+                            # cases where selftext references a crypto
+                            self.srMentions[sub.display_name][crypto] += (post.selftext + post.title).lower().count(crypto)
+                            selfTextBlob = TextBlob(submission.selftext)
+                            sentimentScore = selfTextBlob.sentiment.polarity
+                            subjectivityScore = selfTextBlob.sentiment.subjectivity
+                            self.data.executeSQLFile("lib/sql/insert_reddit_post.sql", [submission.title, str(sub), crypto, stripChars(post.selftext), sentimentScore, subjectivityScore])
+                            # now retrieve comments from the post
+                            submission.comments.replace_more(limit = None)
+                            for comment in submission.comments.list():
+                                if (comment.body.lower().count(crypto) > 0):
+                                    self.srMentions[sub.display_name][crypto] += comment.body.lower().count(crypto)
+                                    commentBlob = TextBlob(comment.body)
+                                    commentSentiment = commentBlob.sentiment.polarity
+                                    commentSubjectivity = commentBlob.sentiment.subjectivity
+                                    self.data.executeSQLFile("lib/sql/insert_reddit_comment.sql", [str(sub), crypto, str(comment), stripChars(comment.body), commentSentiment, commentSubjectivity])
+
         else:
-            self.data.executeSQLFile("lib/sql/update_last_run.sql")
-            return
-               
-        # for sub in self.subreddits:  
-        #     for post in sub.new(limit=lim):
-        #         postTime = int(post.created)  # this is a unix timestamp
-        #         dtPostTime = datetime.fromtimestamp(postTime)
+            # cases where user supplies a limit
+            pass
 
-        #         if (dtPostTime > dtLastRun):
-        #             # include all comments
-        #             post.comments.replace_more(limit = None)
-
-        #             for crypto in self.cryptos:
-        #                 self.srMentions[sub.display_name][crypto] += post.url.lower().count(crypto)
-
-        #                 if (post.selftext.lower().count(crypto) > 0):
-        #                     self.srMentions[sub.display_name][crypto] += post.selftext.lower().count(crypto)
-        #                     selfTextBlob = TextBlob(post.selftext)
-        #                     sentimentScore = selfTextBlob.sentiment.polarity
-        #                     subjectivityScore = selfTextBlob.sentiment.subjectivity
-        #                     self.data.executeSQLFile("lib/sql/insert_reddit_post.sql", [str(sub), crypto, stripChars(post.selftext), sentimentScore, subjectivityScore])
-                                                          
-        #                 for comment in post.comments.list():
-
-        #                     if (comment.body.lower().count(crypto) > 0):
-        #                         self.srMentions[sub.display_name][crypto] += comment.body.lower().count(crypto)
-        #                         commentBlob = TextBlob(comment.body)
-        #                         commentSentiment = commentBlob.sentiment.polarity
-        #                         commentSubjectivity = commentBlob.sentiment.subjectivity 
-
-        #                         self.data.executeSQLFile("lib/sql/insert_reddit_comment.sql", [str(sub), crypto, str(comment), stripChars(comment.body), commentSentiment, commentSubjectivity])
-
-        
         self.data.executeSQLFile("lib/sql/update_last_run.sql")
 
     def writeMentions(self):
@@ -84,7 +70,6 @@ class Reddit(source.Source):
         self.data.executeSQLFile("lib/sql/create_reddit_posts_table.sql")
         self.data.executeSQLFile("lib/sql/create_reddit_comments_table.sql")
         self.data.executeSQLFile("lib/sql/create_last_run_table.sql")
-	self.data.executeSQLFile("lib/sql/update_last_run.sql")
 
 def stripChars(text):
     return text.replace("\"", "").replace("'", "")
