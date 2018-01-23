@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS reddit_posts(
-	title text NOT NULL,
-	sub text NOT NULL,
-	currency text NOT NULL,
-	contents text NOT NULL,
+	title nvarchar NOT NULL,
+	sub nvarchar NOT NULL,
+	currency nvarchar NOT NULL,
+	contents nvarchar NOT NULL,
 	sentiment decimal,
 	subjectivity decimal
 );
