@@ -8,6 +8,7 @@ These metrics are written to a SQLite database (```cryptos.db```) for easy acces
 
 ## Roadmap
 1. Fix how new data is pulled by date
+2. Track down the source of SQL issues...
 
 ## Features
 As of right now, cryptoscrape only works with reddit. Read below to see how to configure reddit scraping.
