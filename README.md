@@ -27,6 +27,10 @@ To run:
 ```
 git clone https://github.com/bdscharf/cryptoscrape.git
 
+git submodule init
+
+git submodule update
+
 cd cryptoscrape
 
 python run.py [post-limit]
