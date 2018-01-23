@@ -77,5 +77,5 @@ class Reddit(source.Source):
 	self.data.executeSQLFile("lib/sql/update_last_run.sql")
 
 def stripChars(text):
-    return text.replace("\"", "").replace("'", "")
+    return "{" + text.replace("\"", "").replace("'", "") + "}"
 
